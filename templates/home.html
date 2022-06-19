@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+  img {
+      padding: 0px;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-position: 50% 50% ;
+      background-repeat: no-repeat;
+      background-size: contain;
+      max-height: 100%;
+      max-width: 100%;
+     }
+  
+     .card-jfy-image{
+       height:200px;
+       width:220px;
+     }
+  </style>
+  <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark amber darken-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <!-- <span class="navbar-brand">Categories:</span> -->
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">All
+                <span class="sr-only">(current)</span>
+              </a>
+            <!-- </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Shirts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sport wears</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Outwears</a>
+            </li> -->
+
+          </ul>
+          <!-- Links -->
+
+          <form class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search_item">
+            </div>
+          </form>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <div class="row wow fadeIn">
+
+          {% for item in page.object_list %}
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+              <div class="view overlay ">
+                <img src="{{ item.imageURL}} " class="img card-jfy-image card-jfy-image-background" alt="">
+                <a href="{{ item.get_absolute_url }}">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <div class="card-body text-center">
+                <a href="" class="grey-text">
+                  <h5>{{ item.get_category_display }}</h5>
+                  <!-- <h5>{{ form.search_category }}</h5> -->
+                </a>
+                <h5>
+                  <strong>
+                    <a href="{{ item.get_absolute_url }} " class="dark-grey-text">{{item.title}}
+                      {% if item.get_label_display %}
+                      <span class="badge badge-pill {{ item.get_label_display }}-color">{{item.label}}</span>
+                      {% else %}
+                      <span></span>
+                      {% endif %}
+                    </a>
+                  </strong>
+                </h5>
+  
+                <!-- <h5 class="font-weight-bold blue-text"> -->
+                <div>
+                  <strong>
+                    {% if item.discount_price %}
+                    <h4 class="font-weight-bold blue-text"><span>&#8369;{{ item.discount_price }}</span></h4>
+                    <span class="mr-1"><del class="red-text">&#8369;{{ item.price }}</del></span>
+                    {% else %}
+                    <h4 class="font-weight-bold blue-text"><span>&#8369;{{ item.price }}</span></h4>
+                    <span class="mr-1"><del class="red-text"></del></span>
+                    {% endif %}
+                  </strong>
+                </div>
+                <!-- </h5> -->
+  
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </section>
+      <!--Section: Products v.3-->
+
+      <!--Pagination-->
+
+      {% comment %}{% if is_paginated %}{% endcomment %}
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          {% if page.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page.number }}">{{ page.number }}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% comment %}{% endif %}{% endcomment %}
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+
